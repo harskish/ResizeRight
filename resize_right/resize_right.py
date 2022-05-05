@@ -1,8 +1,8 @@
 from typing import Tuple
 import warnings
 from math import ceil
-import interp_methods
 from fractions import Fraction
+import resize_right.interp_methods as interp_methods
 
 
 class NoneClass:
