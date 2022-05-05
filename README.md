@@ -1,4 +1,25 @@
 # ResizeRight
+
+This was forked from <a href="https://github.com/assafshocher/ResizeRight">Assaf's original repository</a> to be uploadable to Pypi
+
+## Install
+
+```bash
+$ pip install resize-right
+```
+
+## Usage
+
+```python
+import torch
+from resize_right import resize
+
+img = torch.randn(1, 3, 64, 64)
+resized_img = resize(img, scale_factors = 2) # (1, 3, 128, 128)
+```
+
+## Description
+
 This is a resizing packge for images or tensors, that supports both Numpy and PyTorch (**fully differentiable**) seamlessly. The main motivation for creating this is to address some **crucial incorrectness issues** (see item 3 in the list below) that exist in all other resizing packages I am aware of. As far as I know, it is the only one that performs correctly in all cases.  ResizeRight is specially made for machine learning, image enhancement and restoration challenges.
 
 The code is inspired by MATLAB's imresize function, but with crucial differences. It is specifically useful due to the following reasons:
