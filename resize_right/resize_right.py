@@ -387,9 +387,20 @@ def fw_pad(x, fw, pad_sz, pad_mode, dim=0):
     if pad_sz == (0, 0):
         return x
     if fw is numpy:
+        pl, pr = pad_sz
         pad_vec = [(0, 0)] * x.ndim
-        pad_vec[dim] = pad_sz
-        return fw.pad(x, pad_width=pad_vec, mode=pad_mode)
+        
+        # Pad
+        pad_vec[dim] = [max(pl, 0), max(pr, 0)] # negative pad not supported on np
+        x = fw.pad(x, pad_width=pad_vec, mode=pad_mode)
+        
+        # Crop
+        slices = [slice(0, size) for size in x.shape]
+        slices[dim] = slice(
+            0 if pl > 0 else -pl,
+            x.shape[dim] if pr > 0 else x.shape[dim] + pr
+        )
+        return x[tuple(slices)]
     else:
         if x.ndim < 3:
             x = x[None, None, ...]
